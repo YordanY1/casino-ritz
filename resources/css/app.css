@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@keyframes casino-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes card-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px #daa520, 0 0 30px #c41e3a;
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 30px #ffd700, 0 0 60px #daa520;
+        transform: scale(1.03);
+    }
+}
+
+.animate-card-pulse {
+    animation: card-pulse 3s infinite;
+}
+
+.input-ritz {
+    @apply w-full px-4 py-3 rounded-lg bg-ritz-bg border border-ritz-gold focus:ring-2 focus:ring-ritz-red text-ritz-white placeholder-gray-400;
+}
+
+
+
+.bg-casino-gradient {
+    background: linear-gradient(-45deg, #6c1212, #111111, #daa520, #111111);
+    background-size: 400% 400%;
+    animation: casino-gradient 12s ease infinite;
+}
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-ritz-nav: #6c1212;
+    --color-ritz-red: #C41E3A;
+    --color-ritz-gold: #DAA520;
+    --color-ritz-gold-light: #FFD700;
+    --color-ritz-white: #FFFFFF;
+    --color-ritz-bg: #111111;
+    --color-ritz-text-main: #F5F5F5;
+    --color-ritz-text-secondary: #BBBBBB;
+
+}
