@@ -16,7 +16,14 @@ use App\Livewire\Pages\GalleryShow;
 use App\Livewire\Pages\AlbumShow;
 
 
+Route::get('/', function () {
+    $defaultLang = config('app.locale');
+    return redirect()->route('home', ['lang' => $defaultLang]);
+});
+
+// Начална страница с език
 Route::get('/{lang}', Home::class)->name('home');
+
 Route::get('/{lang}/about', About::class)->name('about');
 
 Route::get('/{lang}/live-game', LiveGame::class)->name('live-game');

@@ -16,16 +16,15 @@
                 {{ __('home.welcome_subtitle') }}
             </p>
 
-            {{-- CTA бутон (ако решиш да го върнем) --}}
-            {{--
-            <a href="{{ route('promos.index', app()->getLocale()) }}" wire:navigate
+
+            <a href="{{ route('promotions', app()->getLocale()) }}" wire:navigate
                class="inline-block px-8 py-4 text-lg font-semibold
                       bg-ritz-gold text-ritz-bg rounded-md relative overflow-hidden hover:bg-ritz-yellow transition">
                 <span class="relative z-10">{{ __('home.see_promos') }}</span>
                 <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent
                              translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700"></span>
             </a>
-            --}}
+
 
             {{-- Sparkles --}}
             <div class="absolute top-12 left-1/4 text-ritz-gold animate-ping">✦</div>
