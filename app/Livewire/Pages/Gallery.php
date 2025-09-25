@@ -3,11 +3,19 @@
 namespace App\Livewire\Pages;
 
 use Livewire\Component;
+use App\Models\Gallery as GalleryModel;
+
 
 class Gallery extends Component
 {
     public function render()
     {
-        return view('livewire.pages.gallery')->layout('layouts.app');
+        $galleries = GalleryModel::latest()->get();
+
+        return view('livewire.pages.gallery', [
+            'galleries' => $galleries,
+        ])->layout('layouts.app', [
+            'title' => __('gallery.title')
+        ]);
     }
 }

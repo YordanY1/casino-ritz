@@ -1,7 +1,7 @@
 <div x-data="{
     open: false,
     currentImage: null,
-    images: @js(array_map(fn($img) => asset('images/' . $img), $images)),
+    images: @js($promotions->pluck('image_url')),
     prev() {
         this.currentImage = (this.currentImage - 1 + this.images.length) % this.images.length;
     },

@@ -20,7 +20,7 @@
 
     @livewire('navigation')
 
-    <main class="min-h-screen">
+    <main class="h-auto bg-ritz-black">
         {{ $slot }}
     </main>
 

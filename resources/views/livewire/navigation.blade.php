@@ -68,14 +68,44 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
+
             <ul x-show="open" @click.outside="open = false" x-transition
                 class="absolute right-0 mt-2 w-40 bg-ritz-dark border border-ritz-gold rounded-md shadow-lg overflow-hidden z-50">
-                <li><a href="?lang=bg" class="flex items-center px-4 py-2 hover:bg-ritz-red">🇧🇬 Български</a></li>
-                <li><a href="?lang=en" class="flex items-center px-4 py-2 hover:bg-ritz-red">🇬🇧 English</a></li>
-                <li><a href="?lang=tr" class="flex items-center px-4 py-2 hover:bg-ritz-red">🇹🇷 Türkçe</a></li>
-                <li><a href="?lang=el" class="flex items-center px-4 py-2 hover:bg-ritz-red">🇬🇷 Ελληνικά</a></li>
+
+                {{-- Български --}}
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'bg'] + request()->route()->parameters()) }}"
+                        class="flex items-center px-4 py-2 hover:bg-ritz-red">
+                        🇧🇬 Български
+                    </a>
+                </li>
+
+                {{-- English --}}
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'en'] + request()->route()->parameters()) }}"
+                        class="flex items-center px-4 py-2 hover:bg-ritz-red">
+                        🇬🇧 English
+                    </a>
+                </li>
+
+                {{-- Türkçe --}}
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'tr'] + request()->route()->parameters()) }}"
+                        class="flex items-center px-4 py-2 hover:bg-ritz-red">
+                        🇹🇷 Türkçe
+                    </a>
+                </li>
+
+                {{-- Ελληνικά --}}
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'el'] + request()->route()->parameters()) }}"
+                        class="flex items-center px-4 py-2 hover:bg-ritz-red">
+                        🇬🇷 Ελληνικά
+                    </a>
+                </li>
             </ul>
         </div>
+
 
         {{-- Burger button --}}
         <button class="lg:hidden relative w-8 h-8 focus:outline-none" @click="mobileOpen = !mobileOpen">
@@ -127,7 +157,6 @@
             <li><a href="{{ route('careers', app()->getLocale()) }}" wire:navigate
                     class="hover:text-ritz-gold">{{ __('navigation.careers') }}</a></li>
         </ul>
-
         {{-- Language Switcher Mobile --}}
         <div class="border-t border-ritz-gold mt-4 pt-4 px-4" x-data="{ open: false }">
             <button @click="open = !open"
@@ -155,12 +184,26 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
+
             <ul x-show="open" x-transition class="mt-2 space-y-1 bg-ritz-dark border border-ritz-gold rounded-md">
-                <li><a href="?lang=bg" class="block px-4 py-2 hover:bg-ritz-red">🇧🇬 Български</a></li>
-                <li><a href="?lang=en" class="block px-4 py-2 hover:bg-ritz-red">🇬🇧 English</a></li>
-                <li><a href="?lang=tr" class="block px-4 py-2 hover:bg-ritz-red">🇹🇷 Türkçe</a></li>
-                <li><a href="?lang=el" class="block px-4 py-2 hover:bg-ritz-red">🇬🇷 Ελληνικά</a></li>
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'bg'] + request()->route()->parameters()) }}"
+                        class="block px-4 py-2 hover:bg-ritz-red">🇧🇬 Български</a>
+                </li>
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'en'] + request()->route()->parameters()) }}"
+                        class="block px-4 py-2 hover:bg-ritz-red">🇬🇧 English</a>
+                </li>
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'tr'] + request()->route()->parameters()) }}"
+                        class="block px-4 py-2 hover:bg-ritz-red">🇹🇷 Türkçe</a>
+                </li>
+                <li>
+                    <a href="{{ route(Route::currentRouteName(), ['lang' => 'el'] + request()->route()->parameters()) }}"
+                        class="block px-4 py-2 hover:bg-ritz-red">🇬🇷 Ελληνικά</a>
+                </li>
             </ul>
         </div>
+
     </div>
 </nav>

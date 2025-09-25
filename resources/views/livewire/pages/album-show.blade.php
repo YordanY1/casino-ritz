@@ -1,11 +1,7 @@
 <div x-data="{
     open: false,
     currentImage: null,
-    images: [
-        '{{ asset('images/live.jpg') }}',
-        '{{ asset('images/live.jpg') }}',
-        '{{ asset('images/live.jpg') }}'
-    ],
+    images: @js($images),
     prev() {
         this.currentImage = (this.currentImage - 1 + this.images.length) % this.images.length;
     },
@@ -23,7 +19,7 @@
 
     <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl md:text-5xl font-extrabold text-ritz-gold text-center mb-12 uppercase">
-            {{ __('gallery.interior') }}
+            {{ $gallery->translated_title }}
         </h1>
 
         {{-- Grid --}}
@@ -50,5 +46,29 @@
 
             <button class="absolute right-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="next()">›</button>
         </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mb-16">
+        @if ($gallery->slug !== 'interior' && $albums->count())
+            <h2 class="text-3xl font-extrabold text-ritz-gold mb-8 text-center uppercase">
+                {{ __('gallery.albums') }}
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                @foreach ($albums as $album)
+                    <a href="{{ route('album.show', [app()->getLocale(), $gallery->slug, $album->slug]) }}"
+                        class="group relative rounded-xl overflow-hidden border-4 border-ritz-gold shadow-lg hover:scale-105 transform transition duration-500">
+                        <img src="{{ $album->cover ? Storage::url($album->cover) : asset('images/placeholder.jpg') }}"
+                            alt="{{ $album->translated_title }}"
+                            class="w-full h-64 object-cover group-hover:opacity-90 transition duration-500">
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <h3 class="text-2xl font-extrabold text-ritz-gold uppercase">
+                                {{ $album->translated_title }}
+                            </h3>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>

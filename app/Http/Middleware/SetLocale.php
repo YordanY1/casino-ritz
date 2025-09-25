@@ -3,17 +3,19 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\App;
+use Illuminate\Http\Request;
 
 class SetLocale
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if ($locale = $request->get('lang')) {
-            session(['locale' => $locale]);
-        }
+        $lang = $request->route('lang');
 
-        App::setLocale(session('locale', config('app.locale')));
+        if (in_array($lang, ['bg', 'en', 'tr', 'el'])) {
+            app()->setLocale($lang);
+        } else {
+            app()->setLocale(config('app.locale'));
+        }
 
         return $next($request);
     }

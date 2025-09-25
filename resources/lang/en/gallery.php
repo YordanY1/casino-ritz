@@ -2,6 +2,5 @@
 
 return [
     'title' => 'Gallery',
-    'interior' => 'Interior',
-    'events' => 'Events',
+    'albums' => 'Albums',
 ];
