@@ -4,6 +4,10 @@ namespace App\Livewire\Pages;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\Career;
+use App\Notifications\NewCareerNotification;
+use App\Models\User;
+
 
 class Careers extends Component
 {
@@ -39,12 +43,20 @@ class Careers extends Component
 
         $path = $this->cv->store('cvs', 'public');
 
-        // 
-        // Mail::to('hr@casino-ritz.eu')->send(new CareerApplication(...));
+        $career = Career::create([
+            'name'     => $this->name,
+            'email'    => $this->email,
+            'phone'    => $this->phone,
+            'position' => $this->position,
+            'message'  => $this->message,
+            'cv'       => $path,
+        ]);
+
+        User::all()->each->notify(new NewCareerNotification($career));
+
 
         session()->flash('success', 'Вашата кандидатура е изпратена успешно!');
-
-        $this->reset(); // ресетва формата
+        $this->reset();
     }
 
     public function render()
