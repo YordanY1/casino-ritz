@@ -49,19 +49,31 @@
                     {{ __('footer.subscribe_btn') }}
                 </button>
             </form>
-
         </div>
 
         <div class="flex flex-col items-center md:items-end justify-center">
             <p class="text-lg font-semibold text-ritz-gold mb-4">"Casino Ritz винаги дава повече!"</p>
             <div class="flex gap-6 text-3xl">
-                <a href="https://www.facebook.com/Ritzcasino" class="hover:text-ritz-gold transition"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://www.instagram.com/ritzstarcasino/" class="hover:text-ritz-gold transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/Ritzcasino" class="hover:text-ritz-gold transition"><i
+                        class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/ritzstarcasino/" class="hover:text-ritz-gold transition"><i
+                        class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
     </div>
 
-    <div class="relative border-t border-ritz-nav mt-12 pt-6 text-center text-base text-ritz-text-secondary z-10">
-        © {{ now()->year }} | Casino Ritz | {{ __('footer.rights') }}
+    <div
+        class="relative border-t border-ritz-nav mt-12 pt-6 text-center text-base text-ritz-text-secondary z-10 flex flex-col md:flex-row justify-center gap-6">
+        <p>© {{ now()->year }} | Casino Ritz | {{ __('footer.rights') }}</p>
+        <div class="flex gap-6">
+            <a href="{{ route('privacy', ['lang' => app()->getLocale()]) }}"
+                class="hover:text-ritz-gold transition">{{ __('footer.privacy') }}</a>
+            <a href="{{ route('cookies', ['lang' => app()->getLocale()]) }}"
+                class="hover:text-ritz-gold transition">{{ __('footer.cookies') }}</a>
+            <a href="{{ route('terms', ['lang' => app()->getLocale()]) }}"
+                class="hover:text-ritz-gold transition">{{ __('footer.terms') }}</a>
+            <a href="{{ route('disclaimer', ['lang' => app()->getLocale()]) }}"
+                class="hover:text-ritz-gold transition">{{ __('footer.disclaimer') }}</a>
+        </div>
     </div>
 </footer>

@@ -63,8 +63,37 @@ class LiveGameShow extends Component
 
     public function render()
     {
+        $game = $this->games[$this->slug];
+
+
+        $jsonLd = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Game',
+            'name' => $game['title'],
+            'description' => $game['intro'],
+            'image' => asset('images/' . $game['img']),
+            'applicationCategory' => 'Casino Game',
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => 'Casino Ritz',
+                'url' => url('/'),
+                'logo' => asset('images/logo.png'),
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
         return view('livewire.pages.live-game-show', [
-            'game' => $this->games[$this->slug],
-        ])->layout('layouts.app', ['title' => $this->games[$this->slug]['title']]);
+            'game' => $game,
+        ])->layout('layouts.app', [
+            'title' => $game['title'] . ' - Casino Ritz',
+            'description' => $game['intro'],
+            'keywords' => strtolower($game['title']) . ', live game, казино игри, игри на маса, Casino Ritz',
+            'author' => 'Casino Ritz Team',
+            'robots' => 'index, follow',
+            'revisitAfter' => '7 days',
+            'ogType' => 'article',
+            'image' => asset('images/' . $game['img']),
+            'twitter' => '@casinoritz',
+            'jsonLd' => $jsonLd,
+        ]);
     }
 }

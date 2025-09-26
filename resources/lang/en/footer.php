@@ -7,4 +7,8 @@ return [
     'email' => 'Email',
     'subscribe_btn' => 'Subscribe',
     'rights' => 'All rights reserved',
+    'privacy' => 'Privacy Policy',
+    'cookies' => 'Cookies Policy',
+    'terms' => 'Terms and Conditions',
+    'disclaimer' => 'Disclaimer',
 ];

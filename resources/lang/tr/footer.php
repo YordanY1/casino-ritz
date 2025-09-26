@@ -7,4 +7,8 @@ return [
     'email' => 'E-posta',
     'subscribe_btn' => 'Abone Ol',
     'rights' => 'Tüm hakları saklıdır',
+    'privacy' => 'Gizlilik Politikası',
+    'cookies' => 'Çerez Politikası',
+    'terms' => 'Şartlar ve Koşullar',
+    'disclaimer' => 'Feragatname',
 ];

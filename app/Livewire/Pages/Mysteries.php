@@ -21,7 +21,41 @@ class Mysteries extends Component
 
     public function render()
     {
+        $jsonLd = json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => 'Mystery Jackpots - Casino Ritz',
+            'description' => 'Мистери джакпоти в реално време в Казино Риц. Следете наградните фондове и диапазоните – всеки ден нов шанс за изненада!',
+            'mainEntity' => [
+                '@type' => 'ItemList',
+                'itemListElement' => collect($this->mysteries)->map(function ($mystery, $index) {
+                    return [
+                        '@type' => 'ListItem',
+                        'position' => $index + 1,
+                        'name' => 'Мистерия ' . ($index + 1),
+                        'description' => 'Диапазон: ' . $mystery['range'],
+                        'offers' => [
+                            '@type' => 'Offer',
+                            'price' => $mystery['value'],
+                            'priceCurrency' => 'BGN',
+                        ]
+                    ];
+                })->toArray(),
+            ]
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+
         return view('livewire.pages.mysteries')
-            ->layout('layouts.app', ['title' => 'Мистерии']);
+            ->layout('layouts.app', [
+                'title' => 'Мистерии и Джакпоти - Casino Ritz',
+                'description' => 'Следете Mystery Jackpot наградите в Casino Ritz – уникални мистерии, прогресивни джакпоти и наградни фондове, които могат да ви изненадат по всяко време!',
+                'keywords' => 'казино мистерии, mystery jackpot, казино джакпоти, Casino Ritz',
+                'author' => 'Casino Ritz Team',
+                'robots' => 'index, follow',
+                'revisitAfter' => '7 days',
+                'ogType' => 'website',
+                'image' => asset('images/mystery-jackpot.jpg'),
+                'twitter' => '@casinoritz',
+                'jsonLd' => $jsonLd,
+            ]);
     }
 }
