@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Promotions\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+
 
 class PromotionForm
 {
@@ -26,6 +28,16 @@ class PromotionForm
                     ->visibility('public')
                     ->required(),
 
+                Select::make('locale')
+                    ->label('Език')
+                    ->options([
+                        'bg' => '🇧🇬 Български',
+                        'en' => '🇬🇧 English',
+                        'tr' => '🇹🇷 Türkçe',
+                        'el' => '🇬🇷 Ελληνικά',
+                    ])
+                    ->default('bg')
+                    ->required(),
             ]);
     }
 }

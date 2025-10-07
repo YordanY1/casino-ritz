@@ -14,7 +14,7 @@ class Promotion extends Model
     protected $fillable = [
         'title',
         'image',
-
+        'locale',
     ];
 
     protected $appends = ['image_url'];

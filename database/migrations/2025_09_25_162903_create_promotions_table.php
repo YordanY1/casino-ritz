@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(); 
+            $table->string('title')->nullable();
             $table->string('image');
+            $table->string('locale', 5)->default('bg');
             $table->timestamps();
         });
     }

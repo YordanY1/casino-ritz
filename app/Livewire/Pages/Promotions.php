@@ -9,7 +9,16 @@ class Promotions extends Component
 {
     public function render()
     {
-        $promotions = Promotion::latest()->get();
+        $locale = app()->getLocale();
+
+        $promotions = Promotion::where('locale', $locale)
+            ->latest()
+            ->get();
+
+        if ($promotions->isEmpty()) {
+            $promotions = Promotion::where('locale', 'en')->latest()->get();
+        }
+
 
         $jsonLd = json_encode([
             '@context' => 'https://schema.org',
@@ -21,7 +30,7 @@ class Promotions extends Component
                     '@type' => 'ListItem',
                     'position' => $index + 1,
                     'name' => $promo->title,
-                    'url' => route('promotions.show', $promo->id),
+                    'url' => route('promotions', ['lang' => app()->getLocale()]),
                 ];
             })->toArray(),
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
