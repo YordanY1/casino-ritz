@@ -11,27 +11,46 @@ class Gallery extends Component
     {
         $galleries = GalleryModel::latest()->get();
 
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        $collectionSchema = [
             '@type' => 'CollectionPage',
             'name' => 'Галерия - Casino Ritz',
             'description' => 'Разгледайте галерията на Casino Ritz – снимки от интериора, специални събития, турнири и атмосферата на най-луксозното казино в Пловдив.',
             'url' => url()->current(),
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
 
         return view('livewire.pages.gallery', [
             'galleries' => $galleries,
         ])->layout('layouts.app', [
-            'title' => 'Галерия - Casino Ritz',
+
+            'title' => 'Галерия - Casino Ritz Пловдив',
             'description' => 'Галерия със снимки от Casino Ritz – интериор, игрални зали, турнири и специални събития в Пловдив.',
-            'keywords' => 'casino ritz, галерия, снимки казино, казино пловдив, интериор казино, турнири',
-            'author' => 'Casino Ritz Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
+            'robots' => 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
             'ogType' => 'website',
-            'image' => asset('images/gallery-cover.jpg'),
+            'image' => asset('images/logo.png'),
             'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
+
+            'breadcrumb' => [
+                ['name' => 'Начало', 'url' => url('/')],
+                ['name' => 'Галерия', 'url' => url('/gallery')],
+            ],
+
+            'schema' => [
+                '@type' => 'WebPage',
+                'name' => 'Галерия Casino Ritz',
+                'description' => 'Снимки от интериора, турнирите и атмосферата в Casino Ritz Пловдив.',
+            ],
+            'collectionSchema' => $collectionSchema,
+
+            'organizationSchema' => [
+                '@type' => 'Organization',
+                'name' => 'Casino Ritz',
+                'url' => url('/'),
+                'logo' => asset('images/logo.png'),
+                'sameAs' => [
+                    'https://www.facebook.com/Ritzcasino',
+                    'https://www.instagram.com/ritzstarcasino/',
+                ]
+            ],
         ]);
     }
 }

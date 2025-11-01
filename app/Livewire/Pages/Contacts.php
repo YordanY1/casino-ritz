@@ -8,8 +8,7 @@ class Contacts extends Component
 {
     public function render()
     {
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        $localBusinessSchema = [
             '@type' => 'LocalBusiness',
             'name' => 'Casino Ritz',
             'image' => asset('images/logo.png'),
@@ -29,22 +28,45 @@ class Contacts extends Component
             ],
             'openingHours' => 'Mo-Su 00:00-23:59',
             'sameAs' => [
-                'https://www.facebook.com/Ritzstarcasinopoker',
-                'https://www.instagram.com/casinoritz',
+                'https://www.facebook.com/Ritzcasino',
+                'https://www.instagram.com/ritzstarcasino/',
             ]
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
 
-        return view('livewire.pages.contacts')->layout('layouts.app', [
-            'title' => __('contacts.title'),
-            'description' => 'Свържете се с Casino Ritz – адрес, телефон, работно време и локация в Пловдив.',
-            'keywords' => 'casino ritz контакти, казино пловдив адрес, телефон casino ritz, работно време казино',
-            'author' => 'Casino Ritz Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
-            'ogType' => 'website',
-            'image' => asset('images/logo.png'),
-            'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
-        ]);
+        return view('livewire.pages.contacts')
+            ->layout('layouts.app', [
+
+                'title'       => __('contacts.title') . ' - Casino Ritz Пловдив',
+                'description' => 'Свържете се с Casino Ritz – адрес, телефон, работно време и локация в Пловдив.',
+                'author'      => 'Casino Ritz Team',
+                'robots'      => 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+                'ogType'      => 'website',
+                'image'       => asset('images/logo.png'),
+                'twitter'     => '@casinoritz',
+
+                'breadcrumb' => [
+                    ['name' => 'Начало', 'url' => url('/')],
+                    ['name' => 'Контакти', 'url' => url('/contacts')],
+                ],
+
+                'schema' => [
+                    '@type' => 'ContactPage',
+                    'name' => 'Контакти Casino Ritz',
+                    'description' => 'Контактна информация и адрес на Casino Ritz Пловдив.',
+                ],
+
+                'localBusinessSchema' => $localBusinessSchema,
+
+                'organizationSchema' => [
+                    '@type' => 'Organization',
+                    'name' => 'Casino Ritz',
+                    'url' => url('/'),
+                    'logo' => asset('images/logo.png'),
+                    'sameAs' => [
+                        'https://www.facebook.com/Ritzcasino',
+                        'https://www.instagram.com/ritzstarcasino/',
+                    ]
+                ],
+            ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Livewire\Pages;
 
 use Livewire\Component;
-use App\Models\Gallery;
 use App\Models\Album;
 
 class AlbumShow extends Component
@@ -24,34 +23,61 @@ class AlbumShow extends Component
             ->map(fn($img) => \Storage::url($img))
             ->toArray();
 
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        $imageGallerySchema = [
             '@type' => 'ImageGallery',
             'name' => $this->album->title,
-            'description' => $this->album->description ?? 'Албум от Casino Ritz',
+            'description' => $this->album->description ?? 'Албум от Casino Ritz Пловдив',
             'url' => url()->current(),
             'image' => collect($images)->map(fn($img) => [
                 '@type' => 'ImageObject',
                 'url' => $img,
                 'contentUrl' => $img,
-                'caption' => $this->album->title,
+                'caption' => $this->album->title . ' — Casino Ritz Пловдив',
             ])->toArray()
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
 
         return view('livewire.pages.album-show', [
             'album' => $this->album,
             'images' => $images,
         ])->layout('layouts.app', [
-            'title' => $this->album->title . ' - Галерия Casino Ritz',
-            'description' => $this->album->description ?? 'Разгледайте албума "' . $this->album->title . '" от Casino Ritz – снимки от събития, турнири и специални вечери.',
-            'keywords' => 'casino ritz, албум ' . strtolower($this->album->title) . ', галерия казино, снимки казино пловдив',
-            'author' => 'Casino Ritz Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
-            'ogType' => 'website',
+
+            'title' => $this->album->title . ' — Галерия Casino Ritz Пловдив',
+            'description' => $this->album->description ?? 'Разгледайте снимки от събития, турнири и специални вечери в Casino Ritz Пловдив.',
+            'ogType' => 'article',
             'image' => $images[0] ?? asset('images/logo.png'),
-            'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
+            'author' => 'Casino Ritz Team',
+
+            'breadcrumb' => [
+                ['name' => 'Начало', 'url' => url('/')],
+                ['name' => 'Галерия', 'url' => url('/gallery')],
+                ['name' => $this->album->title, 'url' => url()->current()],
+            ],
+
+            'schema' => [
+                '@type' => 'WebPage',
+                'name' => $this->album->title,
+                'description' => $this->album->description ?? 'Фото албум от Casino Ritz Пловдив.',
+            ],
+
+            'gallerySchema' => $imageGallerySchema,
+
+            'organizationSchema' => [
+                '@type' => 'Organization',
+                'name' => 'Casino Ritz',
+                'url' => url('/'),
+                'logo' => asset('images/logo.png'),
+                'sameAs' => [
+                    'https://www.facebook.com/Ritzcasino',
+                    'https://www.instagram.com/ritzstarcasino/',
+                ],
+                'contactPoint' => [
+                    '@type' => 'ContactPoint',
+                    'telephone' => '+359888508583',
+                    'contactType' => 'customer service',
+                    'areaServed' => 'BG',
+                    'availableLanguage' => ['Bulgarian', 'English'],
+                ]
+            ],
         ]);
     }
 }

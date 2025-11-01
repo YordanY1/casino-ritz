@@ -16,16 +16,13 @@ class GalleryShow extends Component
 
     public function render()
     {
-        $images = [];
+        // Extract images if needed (interior gallery logic)
+        $images = $this->gallery->photos->pluck('path')
+            ->map(fn($img) => \Storage::url($img))
+            ->toArray();
 
-        if ($this->gallery->slug === 'interior') {
-            $images = $this->gallery->photos->pluck('path')
-                ->map(fn($img) => \Storage::url($img))
-                ->toArray();
-        }
-
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        //  ImageGallery Schema
+        $gallerySchema = [
             '@type' => 'ImageGallery',
             'name' => $this->gallery->translated_title,
             'description' => $this->gallery->description ?? 'Галерия от Casino Ritz',
@@ -37,23 +34,50 @@ class GalleryShow extends Component
                 'representativeOfPage' => true,
                 'caption' => $this->gallery->translated_title,
             ])->toArray()
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
 
         return view('livewire.pages.gallery-show', [
             'gallery' => $this->gallery,
             'images' => $images,
             'albums' => $this->gallery->albums,
         ])->layout('layouts.app', [
-            'title' => $this->gallery->translated_title . ' - Casino Ritz',
+
+            // META
+            'title' => $this->gallery->translated_title . ' - Галерия Casino Ritz',
             'description' => $this->gallery->description ?? 'Разгледайте галерията на Casino Ritz – ' . $this->gallery->translated_title,
-            'keywords' => 'casino ritz, галерия, ' . strtolower($this->gallery->translated_title),
-            'author' => 'Casino Ritz Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
+            'robots' => 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
             'ogType' => 'website',
             'image' => $images[0] ?? asset('images/logo.png'),
             'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
+
+            // Breadcrumb
+            'breadcrumb' => [
+                ['name' => 'Начало', 'url' => url('/')],
+                ['name' => 'Галерия', 'url' => url('/gallery')],
+                ['name' => $this->gallery->translated_title, 'url' => url()->current()],
+            ],
+
+            // WebPage Schema
+            'schema' => [
+                '@type' => 'WebPage',
+                'name' => $this->gallery->translated_title,
+                'description' => $this->gallery->description ?? 'Фото галерия в Casino Ritz.',
+            ],
+
+            // Gallery Schema
+            'gallerySchema' => $gallerySchema,
+
+            // Organization Schema reuse
+            'organizationSchema' => [
+                '@type' => 'Organization',
+                'name' => 'Casino Ritz',
+                'url' => url('/'),
+                'logo' => asset('images/logo.png'),
+                'sameAs' => [
+                    'https://www.facebook.com/Ritzcasino',
+                    'https://www.instagram.com/ritzstarcasino/',
+                ]
+            ],
         ]);
     }
 }

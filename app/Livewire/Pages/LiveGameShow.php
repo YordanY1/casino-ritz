@@ -65,35 +65,94 @@ class LiveGameShow extends Component
     {
         $game = $this->games[$this->slug];
 
-
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        $gameSchema = [
             '@type' => 'Game',
             'name' => $game['title'],
-            'description' => $game['intro'],
             'image' => asset('images/' . $game['img']),
+            'description' => $game['intro'],
             'applicationCategory' => 'Casino Game',
+            'genre' => 'Table Game',
+            'gamePlatform' => 'Physical Casino Table',
+            'url' => url()->current(),
             'publisher' => [
                 '@type' => 'Organization',
                 'name' => 'Casino Ritz',
                 'url' => url('/'),
                 'logo' => asset('images/logo.png'),
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'availability' => 'InStoreOnly',
+                'price' => '0',
+                'priceCurrency' => 'BGN',
+            ],
+            'aggregateRating' => [
+                '@type' => 'AggregateRating',
+                'ratingValue' => '4.8',
+                'ratingCount' => 215,
+            ],
+            'additionalProperty' => [
+                [
+                    '@type' => 'PropertyValue',
+                    'name' => 'RTP',
+                    'value' => $game['rtp'],
+                ],
             ]
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
+
+        $breadcrumbSchema = [
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Начало',
+                    'item' => url('/'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Игри на живо',
+                    'item' => route('live-game', ['lang' => app()->getLocale()]),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $game['title'],
+                    'item' => url()->current(),
+                ],
+            ],
+        ];
 
         return view('livewire.pages.live-game-show', [
             'game' => $game,
         ])->layout('layouts.app', [
-            'title' => $game['title'] . ' - Casino Ritz',
+            'title' => $game['title'] . ' - Casino Ritz Пловдив',
             'description' => $game['intro'],
-            'keywords' => strtolower($game['title']) . ', live game, казино игри, игри на маса, Casino Ritz',
-            'author' => 'Casino Ritz Team',
             'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
-            'ogType' => 'article',
+            'ogType' => 'website',
             'image' => asset('images/' . $game['img']),
             'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
+
+            // canonical auto by base layout if you added it
+            'breadcrumb' => [
+                ['name' => 'Начало', 'url' => url('/')],
+                ['name' => 'Игри на живо', 'url' => route('live-game', ['lang' => app()->getLocale()])],
+                ['name' => $game['title'], 'url' => url()->current()],
+            ],
+
+            'schema' => [
+                '@type' => 'WebPage',
+                'name' => $game['title'] . ' - Casino Ritz',
+                'description' => $game['intro'],
+            ],
+
+            'itemListSchema' => null,
+            'organizationSchema' => null,
+
+            'jsonLd' => null,
+            'gameSchema' => $gameSchema,
+            'breadcrumbSchema' => $breadcrumbSchema,
         ]);
     }
 }

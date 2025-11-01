@@ -10,10 +10,39 @@ class Disclaimer extends Component
     {
         return view('livewire.pages.disclaimer')
             ->layout('layouts.app', [
-                'title' => __('disclaimer.title'),
+                'title' => __('disclaimer.title') . ' - Casino Ritz',
                 'description' => __('disclaimer.intro'),
-                'keywords' => 'casino disclaimer, legal disclaimer, отказ от отговорност, Casino Ritz',
-                'robots' => 'index, follow',
+                'robots' => 'noindex, follow',
+
+                // Breadcrumb
+                'breadcrumb' => [
+                    ['name' => 'Начало', 'url' => url('/')],
+                    ['name' => __('disclaimer.title'), 'url' => url('/disclaimer')],
+                ],
+
+                // WebPage Schema (Legal Page)
+                'schema' => [
+                    '@type' => 'WebPage',
+                    'name' => __('disclaimer.title'),
+                    'description' => __('disclaimer.intro'),
+                    'isPartOf' => [
+                        '@type' => 'WebSite',
+                        'url' => url('/'),
+                        'name' => 'Casino Ritz'
+                    ],
+                ],
+
+                // Organization Schema reuse
+                'organizationSchema' => [
+                    '@type' => 'Organization',
+                    'name' => 'Casino Ritz',
+                    'url' => url('/'),
+                    'logo' => asset('images/logo.png'),
+                    'sameAs' => [
+                        'https://www.facebook.com/Ritzcasino',
+                        'https://www.instagram.com/ritzstarcasino/',
+                    ]
+                ],
             ]);
     }
 }

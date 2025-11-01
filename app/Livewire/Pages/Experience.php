@@ -17,37 +17,8 @@ class Experience extends Component
 
     public function render()
     {
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
-            '@type' => 'CollectionPage',
-            'name' => 'Преживявания в Casino Ritz',
-            'description' => 'Разгледайте игрите на живо, ротативките, покера, турнирите, промоциите и събитията в Casino Ritz – едно от най-луксозните казина в Пловдив.',
-            'url' => url()->current(),
-            'hasPart' => collect($this->items)->map(function ($item) {
-                return [
-                    '@type' => 'WebPage',
-                    'name' => __($item['title']),
-                    'url' => $item['route'] ?? false
-                        ? route($item['route'], ['lang' => app()->getLocale()])
-                        : ($item['url'] ?? url('/')),
-
-                ];
-            })->toArray(),
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-
         return view('livewire.pages.experience', [
             'items' => $this->items,
-        ])->layout('layouts.app', [
-            'title' => __('experience.title'),
-            'description' => 'Casino Ritz предлага уникално изживяване – live игри, ротативки, покер турнири, специални събития и промоции в Пловдив.',
-            'keywords' => 'casino ritz experience, казино пловдив, live игри, ротативки, покер, турнири, казино промоции',
-            'author' => 'Casino Ritz Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
-            'ogType' => 'website',
-            'image' => asset('images/experience-cover.jpg'),
-            'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
         ]);
     }
 }

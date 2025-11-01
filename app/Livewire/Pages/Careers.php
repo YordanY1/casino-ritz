@@ -12,12 +12,7 @@ class Careers extends Component
 {
     use WithFileUploads;
 
-    public $name;
-    public $email;
-    public $phone;
-    public $position;
-    public $message;
-    public $cv;
+    public $name, $email, $phone, $position, $message, $cv;
 
     public array $positions = [
         'Крупие',
@@ -59,8 +54,7 @@ class Careers extends Component
 
     public function render()
     {
-        $jsonLd = json_encode([
-            '@context' => 'https://schema.org',
+        $jobPostingSchema = [
             '@type' => 'JobPosting',
             'title' => 'Кариери в Casino Ritz',
             'description' => 'Присъединете се към екипа на Casino Ritz в Пловдив. Отворени позиции: крупие, барман, сервитьор, охрана и други.',
@@ -82,19 +76,44 @@ class Careers extends Component
             ],
             'employmentType' => 'FULL_TIME',
             'datePosted' => now()->toDateString(),
-        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        ];
 
         return view('livewire.pages.careers')->layout('layouts.app', [
-            'title' => __('careers.title'),
+            'title' => __('careers.title') . ' - Casino Ritz Пловдив',
             'description' => 'Работа в Casino Ritz – търсим крупиета, бармани, сервитьори и охрана. Стани част от екипа ни в Пловдив.',
-            'keywords' => 'casino jobs, работа казино, кариери casino ritz, работа крупие пловдив, работа барман пловдив',
             'author' => 'Casino Ritz HR Team',
-            'robots' => 'index, follow',
-            'revisitAfter' => '7 days',
+            'robots' => 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
             'ogType' => 'website',
-            'image' => asset('images/careers.jpg'),
+            'image' => asset('images/logo.png'),
             'twitter' => '@casinoritz',
-            'jsonLd' => $jsonLd,
+
+            // breadcrumb
+            'breadcrumb' => [
+                ['name' => 'Начало', 'url' => url('/')],
+                ['name' => 'Кариери', 'url' => url('/careers')],
+            ],
+
+            // WebPage schema
+            'schema' => [
+                '@type' => 'WebPage',
+                'name' => 'Кариери в Casino Ritz',
+                'description' => 'Стани част от премиум казино екипа в Пловдив.',
+            ],
+
+            // Job Posting Schema
+            'jobPostingSchema' => $jobPostingSchema,
+
+            // Organization (reuse)
+            'organizationSchema' => [
+                '@type' => 'Organization',
+                'name' => 'Casino Ritz',
+                'url' => url('/'),
+                'logo' => asset('images/logo.png'),
+                'sameAs' => [
+                    'https://www.facebook.com/Ritzcasino',
+                    'https://www.instagram.com/ritzstarcasino/',
+                ],
+            ],
         ]);
     }
 }
