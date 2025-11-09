@@ -132,7 +132,7 @@
 
             {{-- Dropdown Games Mobile --}}
             <li x-data="{ open: false }">
-                <button @click="open = !open" class="w-full flex justify-between items-center hover:text-ritz-gold">
+                <button @click="open = !open" class="w-full flex justify-between items-center hover:text-ritz-gold uppercase">
                     {{ __('navigation.games') }}
                     <i class="fa-solid fa-chevron-down text-xs"></i>
                 </button>
