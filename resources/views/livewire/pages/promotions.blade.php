@@ -31,28 +31,26 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             <template x-for="(img, index) in images" :key="index">
                 <div class="relative group rounded-xl overflow-hidden border-4 border-ritz-gold
-                           shadow-[0_0_30px_#daa520] cursor-pointer hover:scale-105
-                           transform transition duration-500 animate-card-pulse"
+               shadow-[0_0_30px_#daa520] cursor-pointer hover:scale-105
+               transform transition duration-500 animate-card-pulse"
                     @click="open = true; currentImage = index">
 
-                    <img :src="images[currentImage]"
-                        class="max-h-[85vh] max-w-full mx-auto rounded-xl shadow-[0_0_50px_#daa520]
-            border-4 border-ritz-gold object-contain transition-opacity duration-500"
-                        x-transition.opacity>
-
+                    <img :src="img"
+                        class="w-full h-auto max-h-[400px] object-cover group-hover:opacity-90 transition duration-500">
 
                     {{-- Overlay --}}
                     <div
                         class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent
-                                opacity-0 group-hover:opacity-100 flex items-end justify-center p-4 transition">
+                    opacity-0 group-hover:opacity-100 flex items-end justify-center p-4 transition">
                         <span
                             class="text-lg font-bold text-ritz-gold uppercase tracking-wide
-                                     drop-shadow-[0_0_15px_#daa520] animate-pulse">
+                         drop-shadow-[0_0_15px_#daa520] animate-pulse">
                             🎰 Casino Ritz
                         </span>
                     </div>
                 </div>
             </template>
+
         </div>
     </div>
 
