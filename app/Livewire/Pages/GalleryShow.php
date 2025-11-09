@@ -17,9 +17,12 @@ class GalleryShow extends Component
     public function render()
     {
         // Extract images if needed (interior gallery logic)
-        $images = $this->gallery->photos->pluck('path')
+        $images = $this->gallery->photos
+            ->pluck('path')
+            ->flatten()
             ->map(fn($img) => \Storage::url($img))
             ->toArray();
+
 
         //  ImageGallery Schema
         $gallerySchema = [
