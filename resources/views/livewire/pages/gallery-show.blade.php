@@ -25,15 +25,11 @@
         {{-- Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <template x-for="(img, index) in images" :key="index">
-                <div
-                    class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer hover:scale-105 transform transition">
-                    <img :src="img"
-                        class="absolute inset-0 w-full h-full object-cover transition duration-500 hover:opacity-90"
-                        @click="open = true; currentImage = index">
-                </div>
+                <img :src="img"
+                    class="rounded-lg shadow-lg cursor-pointer hover:scale-105 transform transition"
+                    @click="open = true; currentImage = index">
             </template>
         </div>
-
     </div>
 
     {{-- Lightbox --}}
