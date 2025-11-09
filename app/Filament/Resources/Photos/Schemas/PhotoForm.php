@@ -18,12 +18,16 @@ class PhotoForm
                     ->required(),
 
                 Forms\Components\FileUpload::make('path')
-                    ->label('Снимка')
+                    ->label('Снимки')
+                    ->multiple()
                     ->image()
                     ->disk('public')
                     ->directory('albums/photos')
                     ->visibility('public')
+                    ->appendFiles()
+                    ->reorderable()
                     ->required(),
+
             ]);
     }
 }
