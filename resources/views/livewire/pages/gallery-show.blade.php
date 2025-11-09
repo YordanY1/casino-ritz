@@ -41,8 +41,13 @@
         <div class="relative max-w-5xl w-full flex items-center justify-center h-full">
             <button class="absolute left-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="prev()">‹</button>
 
-            <img :src="images[currentImage]"
-                class="max-h-[90vh] max-w-full mx-auto rounded-lg shadow-2xl object-contain">
+            <div
+                class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer hover:scale-105 transform transition">
+                <img :src="img"
+                    class="absolute inset-0 w-full h-full object-cover transition duration-500 hover:opacity-90"
+                    @click="open = true; currentImage = index">
+            </div>
+
 
             <button class="absolute right-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="next()">›</button>
         </div>
