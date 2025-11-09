@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Albums\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms;
 use Illuminate\Support\Str;
+use App\Models\Gallery;
 
 class AlbumForm
 {
@@ -15,7 +16,8 @@ class AlbumForm
             ->schema([
                 Forms\Components\Select::make('gallery_id')
                     ->label('Галерия')
-                    ->relationship('gallery', 'display_title')
+                    ->options(Gallery::pluck('title->bg', 'id')->toArray())
+                    ->searchable()
                     ->required(),
 
                 Forms\Components\TextInput::make('title')
