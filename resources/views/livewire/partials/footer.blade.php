@@ -64,9 +64,12 @@ shadow-[0_0_20px_#daa520] hover:scale-105 transform transition uppercase trackin
     </div>
 
     <div
-        class="relative border-t border-ritz-nav mt-12 pt-6 text-center text-base text-ritz-text-secondary z-10 flex flex-col md:flex-row justify-center gap-6">
-        <p>© {{ now()->year }} | Casino Ritz | {{ __('footer.rights') }}</p>
-        <div class="flex gap-6">
+        class="relative border-t border-ritz-nav mt-12 pt-6 text-center text-base text-ritz-text-secondary z-10
+           flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 px-6">
+
+        <p class="order-2 md:order-1">© {{ now()->year }} | Casino Ritz | {{ __('footer.rights') }}</p>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4 order-1 md:order-2">
             <a href="{{ route('privacy', ['lang' => app()->getLocale()]) }}"
                 class="hover:text-ritz-gold transition">{{ __('footer.privacy') }}</a>
             <a href="{{ route('cookies', ['lang' => app()->getLocale()]) }}"
@@ -77,4 +80,5 @@ shadow-[0_0_20px_#daa520] hover:scale-105 transform transition uppercase trackin
                 class="hover:text-ritz-gold transition">{{ __('footer.disclaimer') }}</a>
         </div>
     </div>
+
 </footer>
