@@ -36,18 +36,19 @@
             <p class="text-base text-ritz-text-secondary mb-6 leading-relaxed">
                 {{ __('footer.subscribe_text') }}
             </p>
-            <form class="flex w-full gap-3">
+            <form class="flex flex-col sm:flex-row w-full gap-3">
                 <input type="email" placeholder="{{ __('footer.email') }}"
                     class="flex-grow px-6 py-5 rounded-lg bg-ritz-nav/90 text-white text-lg md:text-xl
                border-2 border-ritz-gold focus:outline-none focus:ring-2 focus:ring-ritz-red
                placeholder-ritz-text-secondary shadow-lg">
 
                 <button type="submit"
-                    class="px-10 py-5 bg-gradient-to-r from-ritz-gold to-ritz-red
-               text-white font-extrabold text-lg md:text-xl rounded-lg
-               shadow-[0_0_20px_#daa520] hover:scale-105 transform transition uppercase tracking-wide">
+                    class="mt-3 sm:mt-0 px-10 py-5 bg-gradient-to-r from-ritz-gold to-ritz-red
+text-white font-extrabold text-lg md:text-xl rounded-lg
+shadow-[0_0_20px_#daa520] hover:scale-105 transform transition uppercase tracking-wide">
                     {{ __('footer.subscribe_btn') }}
                 </button>
+
             </form>
         </div>
 
