@@ -1,21 +1,22 @@
 <div x-data="{
     open: false,
-    currentImage: null,
+    currentImage: 0,
     images: @js($promotions->pluck('image_url')),
     prev() {
         this.currentImage = (this.currentImage - 1 + this.images.length) % this.images.length;
     },
     next() {
         this.currentImage = (this.currentImage + 1) % this.images.length;
+    },
+    handleKey(e) {
+        if (!this.open) return;
+        if (e.key === 'ArrowLeft') this.prev();
+        if (e.key === 'ArrowRight') this.next();
+        if (e.key === 'Escape') this.open = false;
     }
-}" x-init="document.addEventListener('keydown', (e) => {
-    if (open) {
-        if (e.key === 'ArrowLeft') prev();
-        if (e.key === 'ArrowRight') next();
-        if (e.key === 'Escape') open = false;
-    }
-})" x-effect="document.body.classList.toggle('overflow-hidden', open)"
+}" x-init="window.addEventListener('keydown', e => handleKey(e))" x-effect="document.body.classList.toggle('overflow-hidden', open)"
     class="relative bg-ritz-bg py-24 px-6 text-ritz-text-main">
+
 
     <div class="max-w-7xl mx-auto">
         {{-- Title --}}
@@ -34,8 +35,11 @@
                            transform transition duration-500 animate-card-pulse"
                     @click="open = true; currentImage = index">
 
-                    <img :src="img"
-                        class="w-full h-72 object-cover group-hover:opacity-90 transition duration-500">
+                    <img :src="images[currentImage]"
+                        class="max-h-[85vh] max-w-full mx-auto rounded-xl shadow-[0_0_50px_#daa520]
+            border-4 border-ritz-gold object-contain transition-opacity duration-500"
+                        x-transition.opacity>
+
 
                     {{-- Overlay --}}
                     <div
@@ -54,11 +58,16 @@
 
     {{-- Lightbox --}}
     <div x-show="open" x-transition
-        class="fixed inset-0 h-screen w-screen bg-black/95 flex items-center justify-center z-50">
+        class="fixed inset-0 h-screen w-screen bg-black/95 flex items-center justify-center z-[9999]">
 
-        {{-- Close --}}
-        <button class="absolute top-5 right-5 text-4xl text-ritz-gold hover:scale-125 transition"
-            @click="open = false">&times;</button>
+        <!-- Close -->
+        <button
+            class="absolute top-5 right-5 text-5xl text-ritz-gold hover:text-ritz-red
+               hover:scale-125 transition z-[10000] active:scale-95"
+            @click="open = false" x-on:touchstart.stop.prevent="open = false">
+            &times;
+        </button>
+
 
         {{-- Image Viewer --}}
         <div class="relative max-w-6xl w-full flex items-center justify-center h-full px-6">
