@@ -13,7 +13,7 @@ class AlbumShow extends Component
     {
         $this->album = Album::where('slug', $album)
             ->whereHas('gallery', fn($q) => $q->where('slug', $gallery))
-            ->with('photos')
+            ->with(['photos', 'gallery'])
             ->firstOrFail();
     }
 
