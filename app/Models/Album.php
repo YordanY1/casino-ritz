@@ -30,4 +30,9 @@ class Album extends Model
             ?? $this->title['en']
             ?? '';
     }
+
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->title['bg'] ?? $this->title['en'] ?? 'Без заглавие';
+    }
 }

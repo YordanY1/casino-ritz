@@ -15,7 +15,7 @@ class AlbumForm
             ->schema([
                 Forms\Components\Select::make('gallery_id')
                     ->label('Галерия')
-                    ->relationship('gallery', 'title')
+                    ->relationship('gallery', 'display_title')
                     ->required(),
 
                 Forms\Components\TextInput::make('title')
@@ -23,9 +23,7 @@ class AlbumForm
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('slug', Str::slug($state));
-                    }),
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
 
                 Forms\Components\TextInput::make('slug')
                     ->label('Slug')
