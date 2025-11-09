@@ -11,22 +11,20 @@ class GalleryShow extends Component
 
     public function mount($lang, $slug)
     {
-        // Зареждаме галерията + нейните албуми + всички снимки
-        $this->gallery = Gallery::with(['albums.photos', 'photos'])
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $this->gallery = Gallery::with('albums.photos')->where('slug', $slug)->firstOrFail();
     }
 
     public function render()
     {
-        // Взимаме всички снимки към тази галерия
+        // Extract images if needed (interior gallery logic)
         $images = $this->gallery->photos
             ->pluck('path')
             ->flatten()
             ->map(fn($img) => \Storage::url($img))
             ->toArray();
 
-        // ImageGallery Schema
+
+        //  ImageGallery Schema
         $gallerySchema = [
             '@type' => 'ImageGallery',
             'name' => $this->gallery->translated_title,
@@ -46,6 +44,8 @@ class GalleryShow extends Component
             'images' => $images,
             'albums' => $this->gallery->albums,
         ])->layout('layouts.app', [
+
+            // META
             'title' => $this->gallery->translated_title . ' - Галерия Casino Ritz',
             'description' => $this->gallery->description ?? 'Разгледайте галерията на Casino Ritz – ' . $this->gallery->translated_title,
             'robots' => 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
@@ -53,20 +53,24 @@ class GalleryShow extends Component
             'image' => $images[0] ?? asset('images/logo.png'),
             'twitter' => '@casinoritz',
 
+            // Breadcrumb
             'breadcrumb' => [
                 ['name' => 'Начало', 'url' => url('/')],
                 ['name' => 'Галерия', 'url' => url('/gallery')],
                 ['name' => $this->gallery->translated_title, 'url' => url()->current()],
             ],
 
+            // WebPage Schema
             'schema' => [
                 '@type' => 'WebPage',
                 'name' => $this->gallery->translated_title,
                 'description' => $this->gallery->description ?? 'Фото галерия в Casino Ritz.',
             ],
 
+            // Gallery Schema
             'gallerySchema' => $gallerySchema,
 
+            // Organization Schema reuse
             'organizationSchema' => [
                 '@type' => 'Organization',
                 'name' => 'Casino Ritz',
