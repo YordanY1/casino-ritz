@@ -34,18 +34,30 @@
         </div>
     </div>
 
-    <div x-show="open" x-transition
+    <div x-show="open" x-transition.opacity.duration.300ms @click.self="open = false"
         class="fixed inset-0 h-screen w-screen bg-black/90 flex items-center justify-center z-50">
-        <button class="absolute top-5 right-5 text-white text-3xl hover:text-ritz-gold"
-            @click="open = false">&times;</button>
+        <!-- Close -->
+        <button
+            class="absolute top-5 right-5 text-white text-4xl hover:text-ritz-gold z-[10000] active:scale-95 transition"
+            @click="open = false" x-on:touchstart.stop.prevent="open = false">
+            &times;
+        </button>
 
-        <div class="relative max-w-5xl w-full flex items-center justify-center h-full">
-            <button class="absolute left-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="prev()">‹</button>
+        <!-- Prev -->
+        <button class="absolute left-4 text-5xl text-white hover:text-ritz-gold px-4 transition select-none"
+            @click="prev()" x-on:touchstart.stop.prevent="prev()">
+            ‹
+        </button>
 
-            <img :src="images[currentImage]"
-                class="max-h-[90vh] max-w-full mx-auto rounded-lg shadow-2xl object-contain">
+        <!-- Current Image -->
+        <img x-show="currentImage !== null" :src="images[currentImage]"
+            class="max-h-[90vh] max-w-full mx-auto rounded-lg shadow-2xl object-contain transition-opacity duration-300">
 
-            <button class="absolute right-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="next()">›</button>
-        </div>
+        <!-- Next -->
+        <button class="absolute right-4 text-5xl text-white hover:text-ritz-gold px-4 transition select-none"
+            @click="next()" x-on:touchstart.stop.prevent="next()">
+            ›
+        </button>
     </div>
+
 </div>
