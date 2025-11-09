@@ -16,7 +16,6 @@
     }
 })" x-effect="document.body.classList.toggle('overflow-hidden', open)"
     class="relative bg-ritz-bg py-24 px-6 text-ritz-text-main">
-
     <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl md:text-5xl font-extrabold text-ritz-gold text-center mb-12 uppercase">
             {{ $gallery->translated_title }}
@@ -25,27 +24,37 @@
         {{-- Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <template x-for="(img, index) in images" :key="index">
-                <img :src="img"
-                    class="rounded-lg shadow-lg cursor-pointer hover:scale-105 transform transition"
-                    @click="open = true; currentImage = index">
+                <div
+                    class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer hover:scale-105 transform transition">
+                    <img :src="img"
+                        class="absolute inset-0 w-full h-full object-cover transition duration-500 hover:opacity-90"
+                        @click="open = true; currentImage = index">
+                </div>
             </template>
         </div>
     </div>
 
     {{-- Lightbox --}}
-    <div x-show="open" x-transition
+    <div x-show="open" x-transition.opacity.duration.300ms @click.self="open = false"
         class="fixed inset-0 h-screen w-screen bg-black/90 flex items-center justify-center z-50">
-        <button class="absolute top-5 right-5 text-white text-3xl hover:text-ritz-gold"
-            @click="open = false">&times;</button>
+        <!-- Close -->
+        <button class="absolute top-5 right-5 text-white text-3xl hover:text-ritz-gold z-50" @click="open = false">
+            &times;
+        </button>
 
-        <div class="relative max-w-5xl w-full flex items-center justify-center h-full">
-            <button class="absolute left-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="prev()">‹</button>
+        <!-- Prev -->
+        <button class="absolute left-4 text-5xl text-white hover:text-ritz-gold px-4 transition" @click="prev()">
+            ‹
+        </button>
 
-            <img :src="images[currentImage]"
-                class="max-h-[90vh] max-w-full mx-auto rounded-lg shadow-2xl object-contain">
+        <!-- Image -->
+        <img :src="images[currentImage]"
+            class="max-h-[90vh] max-w-full mx-auto rounded-lg shadow-2xl object-contain transition-opacity duration-300">
 
-            <button class="absolute right-2 text-4xl text-white px-4 hover:text-ritz-gold" @click="next()">›</button>
-        </div>
+        <!-- Next -->
+        <button class="absolute right-4 text-5xl text-white hover:text-ritz-gold px-4 transition" @click="next()">
+            ›
+        </button>
     </div>
 
     <div class="max-w-7xl mx-auto mb-16">
