@@ -8,6 +8,10 @@ class GalleryPhoto extends Model
 {
     protected $fillable = ['gallery_id', 'path'];
 
+    protected $casts = [
+        'path' => 'array',
+    ];
+
     public function gallery()
     {
         return $this->belongsTo(Gallery::class);

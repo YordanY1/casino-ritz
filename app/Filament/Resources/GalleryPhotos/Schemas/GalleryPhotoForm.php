@@ -14,14 +14,17 @@ class GalleryPhotoForm
             ->schema([
                 Forms\Components\Select::make('gallery_id')
                     ->label('Галерия')
-                    ->relationship('gallery', 'id') 
+                    ->relationship('gallery', 'id')
                     ->getOptionLabelFromRecordUsing(fn($record) => $record->display_title)
                     ->required(),
 
 
                 Forms\Components\FileUpload::make('path')
-                    ->label('Снимка')
+                    ->label('Снимки')
                     ->image()
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
                     ->disk('public')
                     ->directory('gallery/photos')
                     ->visibility('public')
