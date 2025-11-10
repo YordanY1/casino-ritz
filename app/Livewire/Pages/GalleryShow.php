@@ -11,8 +11,11 @@ class GalleryShow extends Component
 
     public function mount($lang, $slug)
     {
-        $this->gallery = Gallery::with('albums.photos')->where('slug', $slug)->firstOrFail();
+        $this->gallery = Gallery::with([
+            'albums' => fn($q) => $q->orderByDesc('created_at')->with('photos')
+        ])->where('slug', $slug)->firstOrFail();
     }
+
 
     public function render()
     {
