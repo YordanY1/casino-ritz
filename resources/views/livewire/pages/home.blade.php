@@ -33,7 +33,8 @@
                     🎰 {{ __('home.birthday_countdown') }} 🎂
                 </h2>
 
-                <div class="flex justify-center gap-6 md:gap-10 font-mono text-5xl md:text-6xl">
+                <div
+                    class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8 justify-center place-items-center font-mono text-3xl sm:text-4xl md:text-5xl text-center mx-auto w-fit">
                     <template x-for="(label, index) in ['Days', 'Hours', 'Minutes', 'Seconds']" :key="label">
                         <div class="countdown-box relative">
                             <div class="flip-card">
