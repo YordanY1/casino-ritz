@@ -52,6 +52,9 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+
 
     @if (!empty($websiteSchema))
         <script type="application/ld+json">
@@ -148,6 +151,7 @@
 
     @livewire('partials.footer')
     @livewireScripts
+
 </body>
 
 </html>
