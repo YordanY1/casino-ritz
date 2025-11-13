@@ -21,6 +21,7 @@
                 }
             }" x-init="start()">
 
+                {{-- BOX --}}
                 <div
                     class="relative bg-ritz-nav text-3xl font-extrabold text-ritz-gold
                            w-40 h-28 flex items-center justify-center
@@ -40,11 +41,28 @@
                         })"></span>
                 </div>
 
-                <p class="mt-2 text-sm font-semibold">
+                {{-- BGN / EUR --}}
+                <p class="mt-2 text-sm font-semibold text-center">
                     <span class="text-ritz-gold" x-text="value.toFixed(2) + ' BGN'"></span>
-                    /
+                    <span class="text-ritz-text-muted"> / </span>
                     <span class="text-ritz-red" x-text="(value * eurRate).toFixed(2) + ' EUR'"></span>
                 </p>
+
+                {{-- LABEL --}}
+                <p
+                    class="mt-2 text-[13px] font-bold
+       bg-gradient-to-r from-ritz-gold/40 via-ritz-gold/10 to-transparent
+       text-ritz-gold px-3 py-1 rounded-full shadow-lg
+       border border-ritz-gold/40 tracking-wide">
+                    {{ $mystery['label'] }}
+                </p>
+
+                {{-- RANGE --}}
+                <p class="mt-1 text-xs font-semibold text-ritz-red tracking-wide relative">
+                    {{ $mystery['range'] }}
+                    <span class="block w-10 h-[2px] bg-ritz-red/60 mx-auto mt-1 rounded-full"></span>
+                </p>
+
             </div>
         @endforeach
     </div>
