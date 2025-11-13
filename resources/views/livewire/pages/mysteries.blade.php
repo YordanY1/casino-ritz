@@ -7,21 +7,19 @@
         @foreach ($mysteries as $mystery)
             <div class="flex flex-col items-center group" x-data="{
                 value: 0,
-                target: {{ $mystery['value'] }},
+                target: @js($mystery['value']),
                 eurRate: 0.51,
                 start() {
-                    let step = this.target / 60;
-                    let interval = setInterval(() => {
-                        if (this.value + step >= this.target) {
-                            this.value = this.target;
+                    const step = this.target / 60;
+                    const interval = setInterval(() => {
+                        this.value = Math.min(this.target, this.value + step);
+
+                        if (this.value >= this.target) {
                             clearInterval(interval);
-                        } else {
-                            this.value += step;
                         }
                     }, 16);
                 }
             }" x-init="start()">
-
 
                 <div
                     class="relative bg-ritz-nav text-3xl font-extrabold text-ritz-gold
@@ -36,11 +34,14 @@
                                transition-transform duration-1000"></span>
 
                     <span
-                        x-text="value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })"></span>
+                        x-text="value.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })"></span>
                 </div>
 
                 <p class="mt-2 text-sm font-semibold">
-                    <span class="text-ritz-gold" x-text="(value.toFixed(2)) + ' BGN'"></span>
+                    <span class="text-ritz-gold" x-text="value.toFixed(2) + ' BGN'"></span>
                     /
                     <span class="text-ritz-red" x-text="(value * eurRate).toFixed(2) + ' EUR'"></span>
                 </p>

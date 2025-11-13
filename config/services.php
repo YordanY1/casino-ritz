@@ -35,4 +35,6 @@ return [
         ],
     ],
 
+    'mystery_apis' => explode(',', env('MYSTERY_API_URLS')),
+
 ];
