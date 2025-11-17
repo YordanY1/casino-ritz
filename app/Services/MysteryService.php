@@ -54,33 +54,48 @@ class MysteryService
     private function rangeForValue(float $value): array
     {
         return match (true) {
-            $value < 3000 => [
+            $value < 2000 => [
                 'label' => '🟢 Small Mystery',
-                'range' => '1 000 – 3 000 BGN'
+                'range' => '0 – 2 000 BGN'
+            ],
+
+            $value < 3000 => [
+                'label' => '🟡 Medium Mystery',
+                'range' => '2 000 – 3 000 BGN'
+            ],
+
+            $value < 4000 => [
+                'label' => '🟠 High Mystery',
+                'range' => '3 000 – 4 000 BGN'
+            ],
+
+            $value < 5000 => [
+                'label' => '🔥 Super Mystery',
+                'range' => '4 000 – 5 000 BGN'
             ],
 
             $value < 6000 => [
-                'label' => '🟡 Medium Mystery',
-                'range' => '3 000 – 6 000 BGN'
+                'label' => '💎 Mega Mystery',
+                'range' => '5 000 – 6 000 BGN'
             ],
 
             $value < 8000 => [
-                'label' => '🟠 High Mystery',
+                'label' => '👑 Ultra Mystery',
                 'range' => '6 000 – 8 000 BGN'
             ],
 
             $value < 10000 => [
-                'label' => '🔥 Super Mystery',
+                'label' => '💥 Grand Mystery',
                 'range' => '8 000 – 10 000 BGN'
             ],
 
             $value < 15000 => [
-                'label' => '💎 Mega Mystery',
+                'label' => '💠 Crystal Mystery',
                 'range' => '10 000 – 15 000 BGN'
             ],
 
             $value < 30000 => [
-                'label' => '👑 Ultra Mystery',
+                'label' => '🏆 Epic Mystery',
                 'range' => '15 000 – 30 000 BGN'
             ],
 
