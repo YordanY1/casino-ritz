@@ -1,5 +1,6 @@
 <div x-data="{ visible: false }" x-intersect.threshold.20="visible = true" class="relative text-center py-20 bg-ritz-bg">
-    <h2 class="text-4xl md:text-5xl font-extrabold text-ritz-gold mb-12 drop-shadow-[0_0_25px_#daa520]">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-ritz-gold mb-12
+               drop-shadow-[0_0_25px_#daa520]">
         {{ __('mysteries.title') }}
     </h2>
 
@@ -8,33 +9,33 @@
             <div class="flex flex-col items-center group" x-data="{
                 value: 0,
                 target: @js($mystery['value']),
-                eurRate: 0.51,
                 start() {
-                    if (visible) {
-                        const step = this.target / 60;
-                        const interval = setInterval(() => {
-                            this.value = Math.min(this.target, this.value + step);
-                            if (this.value >= this.target) clearInterval(interval);
-                        }, 16);
-                    }
+                    if (!visible) return;
+
+                    const step = this.target / 60;
+                    const interval = setInterval(() => {
+                        this.value = Math.min(this.target, this.value + step);
+                        if (this.value >= this.target) clearInterval(interval);
+                    }, 16);
                 }
             }" x-init="$watch('visible', v => v && start())">
 
-                {{-- BOX --}}
+                {{-- JACKPOT BOX --}}
                 <div :class="visible ? 'animate-card-pulse' : ''"
                     class="relative bg-ritz-nav text-3xl font-extrabold text-ritz-gold
                            w-40 h-28 flex items-center justify-center
                            rounded-lg shadow-lg border-2 border-ritz-gold
                            transform transition duration-300
-                           group-hover:scale-110 group-hover:shadow-[0_0_25px_#daa520]">
+                           group-hover:scale-110
+                           group-hover:shadow-[0_0_25px_#daa520]">
 
-                    {{-- Sweep --}}
+                    {{-- LIGHT SWEEP --}}
                     <span :class="visible ? 'animate-[slide-light_1.4s_ease-in-out]' : ''"
                         class="absolute inset-0 bg-gradient-to-r
                                from-transparent via-ritz-gold-light/20 to-transparent
-                               translate-x-[-100%]
-                               transition-transform duration-1000"></span>
+                               translate-x-[-100%]"></span>
 
+                    {{-- VALUE --}}
                     <span
                         x-text="value.toLocaleString('en-US', {
                             minimumFractionDigits: 2,
@@ -42,19 +43,22 @@
                         })"></span>
                 </div>
 
-                {{-- BGN / EUR --}}
-                <p class="mt-2 text-sm font-semibold text-center">
-                    <span class="text-ritz-gold" x-text="value.toFixed(2) + ' BGN'"></span>
-                    /
-                    <span class="text-ritz-red" x-text="(value * eurRate).toFixed(2) + ' EUR'"></span>
+                {{-- CURRENCY --}}
+                <p class="mt-2 text-sm font-semibold text-center text-ritz-gold">
+                    <span
+                        x-text="value.toLocaleString('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        })"></span>
+                    <span class="ml-1 tracking-wider">EUR</span>
                 </p>
 
                 {{-- LABEL --}}
                 <p
                     class="mt-2 text-[13px] font-bold bg-gradient-to-r
-                    from-ritz-gold/40 via-ritz-gold/10 to-transparent
-                    text-ritz-gold px-3 py-1 rounded-full shadow-lg
-                    border border-ritz-gold/40 tracking-wide">
+                           from-ritz-gold/40 via-ritz-gold/10 to-transparent
+                           text-ritz-gold px-3 py-1 rounded-full shadow-lg
+                           border border-ritz-gold/40 tracking-wide">
                     {{ $mystery['label'] }}
                 </p>
 
