@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Cache;
 
 class MysteryService
 {
+    /**
+     * Fixed BGN -> EUR rate
+     */
+    private const BGN_TO_EUR = 1.95583;
+
     public function getMysteries(): array
     {
         return Cache::remember('mysteries_values', 30, function () {
@@ -25,7 +30,8 @@ class MysteryService
 
                 foreach ($json['jpsystems'] ?? [] as $system) {
 
-                    $currency = $system['currency'] ?? 'EUR';
+                    // We force everything to EUR
+                    $currency = 'EUR';
 
                     foreach ($system['jpsystem_current_levels'] ?? [] as $level) {
 
@@ -33,8 +39,13 @@ class MysteryService
                             continue;
                         }
 
-                        $value = (float) str_replace(',', '', $level['value_vis']);
+                        // Raw value from API
+                        $rawValue = (float) str_replace(',', '', $level['value_vis']);
 
+                        // 🔥 FORCE BGN -> EUR conversion
+                        $value = $this->toEur($rawValue);
+
+                        // Keep only 1000+ EUR mysteries
                         if ($value < 1000) {
                             continue;
                         }
@@ -55,6 +66,14 @@ class MysteryService
 
             return $items;
         });
+    }
+
+    /**
+     * Force convert BGN to EUR
+     */
+    private function toEur(float $value): float
+    {
+        return round($value / self::BGN_TO_EUR, 2);
     }
 
     private function rangeForValue(float $value): array
